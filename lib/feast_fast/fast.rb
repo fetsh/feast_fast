@@ -16,20 +16,26 @@ module FeastFast
       @text = get_text(hsh[:text])
     end
 
-    def get_text(hsh_text)
-      text = case @status
-        when STATUS[:LOOSE]
-          "Пища без мяса"
-        when STATUS[:COMMON]
-          "Постный день"
-        when STATUS[:STRICT]
-          "Строгий пост"
-        when STATUS[:NO]
-          "Нет поста"
-      end
-      text = "#{hsh_text.chomp('.')}. #{text}" if hsh_text
-      text
+    def to_s
+      @text
     end
+
+    private
+
+      def get_text(hsh_text)
+        text = case @status
+          when STATUS[:LOOSE]
+            "Пища без мяса"
+          when STATUS[:COMMON]
+            "Постный день"
+          when STATUS[:STRICT]
+            "Строгий пост"
+          when STATUS[:NO]
+            "Нет поста"
+        end
+        text = "#{hsh_text.chomp('.')}. #{text}" if hsh_text
+        text
+      end
 
   end
 end

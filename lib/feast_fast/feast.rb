@@ -7,5 +7,9 @@ module FeastFast
       @status = hsh[:status]
       @text = hsh[:text]
     end
+
+    def to_s
+      @text
+    end
   end
 end

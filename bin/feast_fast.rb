@@ -2,34 +2,29 @@
 
 require File.expand_path(File.join(File.dirname(__FILE__), %w[.. lib feast_fast]))
 
-day = Date.new(2013, ARGV[0].to_i, ARGV[1].to_i)
-aday = FeastFast::Day.new(day)
-
-adate = Date.new(2012, ARGV[0].to_i, ARGV[1].to_i)
-today = FeastFast::Day.new(adate)
-
-# year = FeastFast::Year.new(2012)
-
-# day = year.day(1, 17)
-
-puts "#{adate.strftime('%Y %d %B')} -- #{today.fast.text}"
-if today.feasts.any?
-  today.feasts.each do |feast|
-    puts feast.text
+if ARGV.any? && ARGV.size == 3
+  begin
+    d1 = FeastFast::Day.new(ARGV[0].to_i, ARGV[1].to_i, ARGV[2].to_i)
+  rescue Exception => e
+    puts "Не удалось свормировать дату"
+    puts e
+    exit 1
   end
+else
+  d1 = FeastFast::Day.today
 end
 
-puts "#{day.strftime('%Y %d %B')} -- #{aday.fast.text}"
-if aday.feasts.any?
-  aday.feasts.each do |feast|
-    puts feast.text
+puts "====================="
+puts "Дата:      #{d1}"
+puts "Пост:      #{d1.fast}"
+if d1.feasts.any?
+  d1.feasts.each_with_index do |feast, index|
+    if index == 0
+puts "Праздники: #{feast.text}"
+    else 
+puts "           #{feast.text}"
+    end
   end
+else
+puts "Праздники: Нет праздников"
 end
-
-
-
-
-# puts "HASH: "
-# Feastfast::DB.hash.sort.each do |day,hash|
-#   puts "#{day.to_s}: #{hash[:feast].size} : #{hash[:feast].last.text}"
-# end
