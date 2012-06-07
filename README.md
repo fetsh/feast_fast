@@ -18,18 +18,21 @@ Or install it yourself as:
 
 ## Usage
 
+``` ruby
     day = FeastFast::Day.today
     puts "Feast: #{day.feasts.first}"
     puts "Fast: #{day.fast}"
-
+```
 or 
 
+``` ruby
     (FeastFast::Day.new(2012,4,6)..FeastFast::Day.new(2012,4,8)).each do |day|
       puts "#{day}: #{day.fast}"
     end
-
+```
 or
-    
+
+``` ruby
     puts "Congrats! It's Easter today!" if FeastFast::Day.today.easter?
 
     today = Date.today
@@ -54,7 +57,7 @@ or
       end
       puts "And don't forget to fast today!" if today.fast?
     end
-
+```
 
 ## TODO
 
