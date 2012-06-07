@@ -62,6 +62,7 @@ end
 ## TODO
 
 - I18n
+- rdoc
 - exceptions handling
 - tests
 
