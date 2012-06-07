@@ -2,7 +2,7 @@ module FeastFast
   require "delegate"
   class Day < DelegateClass(Date)
 
-    attr_reader :feasts, :fast
+    attr_reader :feasts, :fast, :date
 
     def initialize(*params)
       if params.size == 1 && params.last.instance_of?( Date )
@@ -19,8 +19,17 @@ module FeastFast
       self.new(Date.today())
     end
 
+    def self.easter(year=Date.today.year)
+      self.new(DB.data(year.to_i)[:easter])
+    end
+
+    def self.with_feasts(year, status)
+      DB.feasts(year, status).map{|a| self.new(a[0])}
+    end
+
+
     def easter?
-      @date == DB.easter(@date.year)
+      @date == DB.data(@date.year)[:easter]
     end
 
     def + (n)
@@ -57,6 +66,22 @@ module FeastFast
       false
     end
 
+    def > (x)
+      case x
+      when Numeric; return @date > x
+      when Date;    return @date > x
+      when FeastFast::Day; return @date > x.date
+      end
+      raise TypeError, 'expected numeric or date'
+    end
+    def < (x)
+      case x
+      when Numeric; return @date < x
+      when Date;    return @date < x
+      when FeastFast::Day; return @date < x.date
+      end
+      raise TypeError, 'expected numeric or date'
+    end
 
     def next_day(n=1) self + n end
     def prev_day(n=1) self - n end

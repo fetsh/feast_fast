@@ -22,7 +22,14 @@ module FeastFast
 
     def self.easter(year)
       year = year.to_i
-      self.data(year)[:easter]
+      Day.new(self.data(year)[:easter])
+    end
+
+    def self.feasts(year, status)
+      year = year.to_i
+      self.data(year)[:days].select do |date, hash|
+        hash[:feasts].map{|feast| feast.status == status}.any?
+      end
     end
 
   end

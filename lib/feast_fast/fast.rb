@@ -2,16 +2,16 @@
 module FeastFast
   class Fast
 
-    STATUS = {
-      :STRICT => 3,
-      :COMMON => 2,
-      :LOOSE  => 1,
-      :NO     => 0
-    }
+    module STATUS
+      NO     = 0
+      LOOSE  = 1
+      COMMON = 2
+      STRICT = 3
+    end
 
     attr_reader :status, :text
 
-    def initialize(hsh={:status => STATUS[:NO], :text => nil})
+    def initialize(hsh={:status => STATUS::NO, :text => nil})
       @status = hsh[:status]
       @text = get_text(hsh[:text])
     end
@@ -24,13 +24,13 @@ module FeastFast
 
       def get_text(hsh_text)
         text = case @status
-          when STATUS[:LOOSE]
+          when STATUS::LOOSE
             "Пища без мяса"
-          when STATUS[:COMMON]
+          when STATUS::COMMON
             "Постный день"
-          when STATUS[:STRICT]
+          when STATUS::STRICT
             "Строгий пост"
-          when STATUS[:NO]
+          when STATUS::NO
             "Нет поста"
         end
         text = "#{hsh_text.chomp('.')}. #{text}" if hsh_text
