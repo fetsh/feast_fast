@@ -10,9 +10,8 @@ module FeastFast
       else
         @date = Date.new(*params)
       end
-      @easter, @hash = DB.send("year_#{@date.year}".to_sym)
-      @feasts = @hash[@date][:feasts]
-      @fast = @hash[@date][:fast]
+      @feasts = DB.date(@date)[:feasts]
+      @fast = DB.date(@date)[:fast]
       super(@date)
     end
 
@@ -21,7 +20,7 @@ module FeastFast
     end
 
     def easter?
-      @date == @easter
+      @date == DB.easter(@date.year)
     end
 
     def + (n)
