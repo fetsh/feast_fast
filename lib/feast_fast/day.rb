@@ -32,6 +32,14 @@ module FeastFast
       @date == DB.data(@date.year)[:easter]
     end
 
+    def fast?
+      @fast.status != FeastFast::Fast::STATUS::NO
+    end
+
+    def feasts?
+      @feasts.any?
+    end
+
     def + (n)
       case n
       when Numeric; return self.class.new(@date + n)

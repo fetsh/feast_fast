@@ -46,20 +46,20 @@ or
       if today.feasts.any?
         puts "Don't be sad, today you can celebrate #{today.feasts.first}"
       else
-        remaining_feasts = FeastFast::Day.with_feasts(today.year, FeastFast::Feast::STATUS::TWELVE).select{ |feast| feast > today }
+        remaining_feasts = FeastFast::Day.with_feasts(today.year, FeastFast::Feast::STATUS::TWELVE).select{ |feast_day| feast_day > today }
         if remaining_feasts.size > 1
           puts "Don't be sad, there are still #{remaining_feasts.size} Great Feasts in this year:"
           remaining_feasts.sort.each { |date| puts "At #{date.strftime('%d %b')}: #{date.feasts.first}" }
         end
       end
-      puts "And don't forget to fast today!" unless today.fast.status == FeastFast::Fast::STATUS::NO
+      puts "And don't forget to fast today!" if today.fast?
     end
 
 
 ## TODO
 
 - I18n
-- exception handling
+- exceptions handling
 - tests
 
 ## Contributing
