@@ -19,18 +19,11 @@ Or install it yourself as:
 ## Usage
 
 ``` ruby
-day = FeastFast::Day.today
+day = Date.today
 puts "Feast: #{day.feasts.first}"
 puts "Fast: #{day.fast}"
 ```
 or 
-
-``` ruby
-(FeastFast::Day.new(2012,4,6)..FeastFast::Day.new(2012,4,8)).each do |day|
-  puts "#{day}: #{day.fast}"
-end
-```
-or
 
 ``` ruby
 today = Date.today
