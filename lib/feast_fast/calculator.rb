@@ -3,8 +3,9 @@ module FeastFast
   module Calculator
 
     def self.build_data(year)
+
       year = year.to_i
-      easter = easter(year)
+      easter = Date.easter
 
       hash = Hash.new do |h, day|
         h[day] = {
@@ -40,50 +41,50 @@ module FeastFast
 
       # Переходящие праздники
 
-      hash[sunday_after(Date.new(year, 2, 7))][:feasts] << Feast.new(:status => Feast::STATUS::COMMON, :text => "Собор новомучеников и исповедников Российских")
+      hash[Date.new(year, 2, 7).next_sunday][:feasts] << Feast.new(:status => Feast::STATUS::COMMON, :text => "Собор новомучеников и исповедников Российских")
   
-      hash[sunday_before(easter, 11)][:feasts] << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя о Закхее-мытаре")
-      hash[sunday_before(easter, 10)][:feasts] << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя о мытаре и фарисее")
-      hash[sunday_before(easter, 9)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя о блудном сыне")
-      hash[sunday_before(easter, 8)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя о Страшном Суде")
-      hash[sunday_before(easter, 7)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Воспоминание Адамова изгнания. Прощеное воскресенье")
-      hash[sunday_before(easter, 6)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Торжество Православия")
-      hash[sunday_before(easter, 5)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 2-я Великого поста, свт. Григория Паламы, архиеп. Солунского")
-      hash[sunday_before(easter, 4)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 3-я Великого поста, Крестопоклонная")
-      hash[sunday_before(easter, 3)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 4-я Великого поста, прп. Иоанна Лествичника")
-      hash[sunday_before(easter, 2)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 5-я Великого поста, прп. Марии Египетской")
-      hash[sunday_before(easter, 1) - 1][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Лазарева суббота")
-      hash[sunday_before(easter, 1)][:feasts]  << Feast.new(:status => Feast::STATUS::TWELVE, :text => "Вход Господень в Иерусалим")
+      hash[easter.weeks_ago(11)][:feasts] << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя о Закхее-мытаре")
+      hash[easter.weeks_ago(10)][:feasts] << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя о мытаре и фарисее")
+      hash[easter.weeks_ago(9)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя о блудном сыне")
+      hash[easter.weeks_ago(8)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя о Страшном Суде")
+      hash[easter.weeks_ago(7)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Воспоминание Адамова изгнания. Прощеное воскресенье")
+      hash[easter.weeks_ago(6)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Торжество Православия")
+      hash[easter.weeks_ago(5)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 2-я Великого поста, свт. Григория Паламы, архиеп. Солунского")
+      hash[easter.weeks_ago(4)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 3-я Великого поста, Крестопоклонная")
+      hash[easter.weeks_ago(3)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 4-я Великого поста, прп. Иоанна Лествичника")
+      hash[easter.weeks_ago(2)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 5-я Великого поста, прп. Марии Египетской")
+      hash[easter.week_ago.prev_date][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Лазарева суббота")
+      hash[easter.week_ago][:feasts]      << Feast.new(:status => Feast::STATUS::TWELVE, :text => "Вход Господень в Иерусалим")
       
-      hash[day_before(easter, 6)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великий Понедельник")
-      hash[day_before(easter, 5)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великий Вторник")
-      hash[day_before(easter, 4)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великая Среда")
-      hash[day_before(easter, 3)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великий Четверг. Тайная Вечеря")
-      hash[day_before(easter, 2)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великая Пятница. Распятие Христа")
-      hash[day_before(easter, 1)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великая Суббота. Сошествие Христа во ад")
+      hash[easter.prev_date(6)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великий Понедельник")
+      hash[easter.prev_date(5)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великий Вторник")
+      hash[easter.prev_date(4)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великая Среда")
+      hash[easter.prev_date(3)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великий Четверг. Тайная Вечеря")
+      hash[easter.prev_date(2)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великая Пятница. Распятие Христа")
+      hash[easter.prev_date][:feasts]     << Feast.new(:status => Feast::STATUS::COMMON, :text => "Великая Суббота. Сошествие Христа во ад")
 
-      hash[sunday_after(easter, 1)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 2-я по Пасхе (Антипасха). Воспоминание уверения ап. Фомы")
-      hash[sunday_after(easter, 2)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 3-я по Пасхе, святых жен-мироносиц")
-      hash[sunday_after(easter, 3)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 4-я по Пасхе, о расслабленном")
-      hash[sunday_after(easter, 4)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 5-я по Пасхе, о самарянке")
-      hash[sunday_after(easter, 5)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 6-я по Пасхе, о слепом")
-      hash[day_after(easter, 39)][:feasts]    << Feast.new(:status => Feast::STATUS::TWELVE, :text => "Вознесение Господне (40-й день по Пасхе)")
-      hash[sunday_after(easter, 6)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 7-я по Пасхе, свв. отцев I Вселенского Собора")
-      hash[day_after(easter, 49)][:feasts]    << Feast.new(:status => Feast::STATUS::TWELVE, :text => "Пятидесятница. День Святой Троицы (50-й день по Пасхе)")
-      hash[day_after(easter, 50)][:feasts]    << Feast.new(:status => Feast::STATUS::COMMON, :text => "День Святого Духа (первый понедельник по Пятидесятнице)")
-      hash[sunday_after(easter, 8)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 1-я по Пятидесятнице, всех святых")
-      hash[sunday_after(easter, 9)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 2-я по Пятидесятнице, всех святых, в земле Российской просиявших")
+      hash[easter.week_since][:feasts]      << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 2-я по Пасхе (Антипасха). Воспоминание уверения ап. Фомы")
+      hash[easter.weeks_since(2)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 3-я по Пасхе, святых жен-мироносиц")
+      hash[easter.weeks_since(3)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 4-я по Пасхе, о расслабленном")
+      hash[easter.weeks_since(4)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 5-я по Пасхе, о самарянке")
+      hash[easter.weeks_since(5)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 6-я по Пасхе, о слепом")
+      hash[easter.next_date(39)][:feasts]   << Feast.new(:status => Feast::STATUS::TWELVE, :text => "Вознесение Господне (40-й день по Пасхе)")
+      hash[easter.weeks_since(6)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 7-я по Пасхе, свв. отцев I Вселенского Собора")
+      hash[easter.next_date(49)][:feasts]   << Feast.new(:status => Feast::STATUS::TWELVE, :text => "Пятидесятница. День Святой Троицы (50-й день по Пасхе)")
+      hash[easter.next_date(50)][:feasts]   << Feast.new(:status => Feast::STATUS::COMMON, :text => "День Святого Духа (первый понедельник по Пятидесятнице)")
+      hash[easter.weeks_since(8)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 1-я по Пятидесятнице, всех святых")
+      hash[easter.weeks_since(9)][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Неделя 2-я по Пятидесятнице, всех святых, в земле Российской просиявших")
 
       # Дни особого поминовения усопших
 
-      hash[day_before(sunday_before(easter, 8))][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Вселенская родительская суббота (суббота перед неделей о Страшном Суде)")
-      hash[day_before(sunday_before(easter, 5))][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Вселенская родительская суббота 2-й недели Великого поста")
-      hash[day_before(sunday_before(easter, 4))][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Вселенская родительская суббота 3-й недели Великого поста")
-      hash[day_before(sunday_before(easter, 3))][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Вселенская родительская суббота 4-й недели Великого поста")
-      hash[day_after(sunday_after(easter, 1), 2)][:feasts] << Feast.new(:status => Feast::STATUS::COMMON, :text => "Радоница (вторник 2-й седмицы по Пасхе)")
-      hash[day_after(easter, 48)][:feasts]                 << Feast.new(:status => Feast::STATUS::COMMON, :text => "Троицкая родительская суббота (суббота перед Троицей)")
-      hash[Date.new(year, 5, 9)][:feasts]                  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Поминовение усопших воинов")
-      hash[day_before(sunday_before(Date.new(year, 11, 7)))][:feasts] << Feast.new(:status => Feast::STATUS::COMMON, :text => "Дмитриевская родительская суббота (суббота перед 8 ноября)")
+      hash[easter.weeks_ago(8).prev_date][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Вселенская родительская суббота (суббота перед неделей о Страшном Суде)")
+      hash[easter.weeks_ago(5).prev_date][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Вселенская родительская суббота 2-й недели Великого поста")
+      hash[easter.weeks_ago(4).prev_date][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Вселенская родительская суббота 3-й недели Великого поста")
+      hash[easter.weeks_ago(3).prev_date][:feasts]  << Feast.new(:status => Feast::STATUS::COMMON, :text => "Вселенская родительская суббота 4-й недели Великого поста")
+      hash[easter.week_since.next_date(2)][:feasts] << Feast.new(:status => Feast::STATUS::COMMON, :text => "Радоница (вторник 2-й седмицы по Пасхе)")      
+      hash[easter.next_date(48)][:feasts]           << Feast.new(:status => Feast::STATUS::COMMON, :text => "Троицкая родительская суббота (суббота перед Троицей)")
+      hash[Date.new(year, 5, 9)][:feasts]           << Feast.new(:status => Feast::STATUS::COMMON, :text => "Поминовение усопших воинов")
+      hash[Date.new(year, 11, 7).prev_sunday.prev_date][:feasts] << Feast.new(:status => Feast::STATUS::COMMON, :text => "Дмитриевская родительская суббота (суббота перед 8 ноября)")
 
       # Контрабанда
 
@@ -133,38 +134,39 @@ module FeastFast
       hash[Date.new(year, 9, 11)][:fast]  = Fast.new(:status => Fast::STATUS::STRICT) # Усекновение главы Иоанна Предтечи
       hash[Date.new(year, 9, 27)][:fast]  = Fast.new(:status => Fast::STATUS::STRICT) # Воздвижение Креста Господня
 
+
       # Седмица после Недели о мытаре и фарисее - сплошная, пост в среду и пятницу отменяется.
-      (day_after(sunday_before(easter, 10))..day_after(sunday_before(easter, 9))).each do |date|
+      (easter.weeks_ago(10).next_date..easter.weeks_ago(9)).each do |date|
         hash[date][:fast] = Fast.new(:status => Fast::STATUS::NO)
       end
 
       # Седмица сырная (масленица)
-      hash[day_before(easter, 55)][:fast] = Fast.new(:status => Fast::STATUS::LOOSE, :text => "Седмица сырная (масленица)")
-      (day_before(easter, 54)..day_before(easter, 49)).each do |date|
+      hash[easter.prev_date(55)][:fast] = Fast.new(:status => Fast::STATUS::LOOSE, :text => "Седмица сырная (масленица)")
+      (easter.prev_date(54)..easter.prev_date(49)).each do |date|
         hash[date][:fast] = Fast.new(:status => Fast::STATUS::LOOSE)
       end
 
       # Великий пост
-      hash[easter - 48][:fast] = Fast.new(:status => Fast::STATUS::STRICT, :text => "Начало Великого поста")
-      ((easter - 47)..easter-1).each do |date|
+      hash[easter.prev_date(48)][:fast] = Fast.new(:status => Fast::STATUS::STRICT, :text => "Начало Великого поста")
+      (easter.prev_date(47)..easter.prev_date).each do |date|
         hash[date][:fast] = Fast.new(:status => Fast::STATUS::STRICT)
       end
 
-      hash[sunday_before(easter, 1)][:fast] = Fast.new(:status => Fast::STATUS::COMMON) # Вход Господень в Иерусалим
+      hash[easter.week_ago][:fast] = Fast.new(:status => Fast::STATUS::COMMON) # Вход Господень в Иерусалим
       
       # Светлая седмица
-      (day_after(easter)..sunday_after(easter, 1)).each do |date|
+      (easter.next_date..easter.week_since).each do |date|
         hash[date][:fast] = Fast.new(:status => Fast::STATUS::NO)
       end
 
       # Сплошная неделя после пятидесяинцы
-      (day_after(easter, 50)..day_after(easter, 57)).each do |date|
+      (easter.next_date(50)..easter.next_date(56)).each do |date|
         hash[date][:fast] = Fast.new(:status => Fast::STATUS::NO)
       end
 
       # Петров пост
-      hash[day_after(easter, 57)][:fast] = Fast.new(:status => Fast::STATUS::STRICT, :text => "Начало Петрова поста")
-      (day_after(easter, 58)..Date.new(year, 7, 11)).each do |date|
+      hash[easter.next_date(57)][:fast] = Fast.new(:status => Fast::STATUS::STRICT, :text => "Начало Петрова поста")
+      (easter.next_date(58)..Date.new(year, 7, 11)).each do |date|
         if date.wday == 3 || date.wday == 5
           hash[date][:fast] = Fast.new(:status => Fast::STATUS::STRICT)
         else
@@ -180,7 +182,7 @@ module FeastFast
       # Благовещение Пресвятой Богородицы
       date = Date.new(year, 4, 7)
       unless hash[date][:fast].status == Fast::STATUS::NO
-        unless (day_before(easter, 6)..day_before(easter)).include?( date )
+        unless (easter.prev_date(6)..easter.prev_date).include?( date )
           hash[date][:fast] = Fast.new(:status => Fast::STATUS::COMMON)
         end
       end
@@ -189,45 +191,6 @@ module FeastFast
     end
 
     class << self; alias_method :easter_and_days, :build_data; end
-
-    def self.easter(year)
-      year = year.to_i
-      a = (19 * (year % 19) + 15) % 30
-      b = (2 * (year % 4) + 4 * (year % 7) + 6 * a + 6) % 7
-      c = a + b
-      if c > 10
-        d = c - 9 # day
-        m = 4 # month
-      else
-        d = 22 + c # day
-        m = 3 # month
-      end
-      Date.new(year, m, d) + 13
-    end
-
-    def self.sunday_after(date, step=0)
-      while date.wday != 0
-        date += 1
-      end
-      date += 7*(step)
-      return date
-    end
-
-    def self.sunday_before(date, step=0)
-      while date.wday != 0
-        date -= 1
-      end
-      date -= 7*(step)
-      return date
-    end
-
-    def self.day_before(date, step=1)
-      date - step
-    end
-
-    def self.day_after(date, step=1)
-      date + step
-    end
 
   end
 end

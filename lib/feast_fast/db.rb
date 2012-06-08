@@ -20,11 +20,6 @@ module FeastFast
       self.data(date.year)[:days][date]
     end
 
-    def self.easter(year)
-      year = year.to_i
-      Day.new(self.data(year)[:easter])
-    end
-
     def self.feasts(year, status)
       year = year.to_i
       self.data(year)[:days].select do |date, hash|
