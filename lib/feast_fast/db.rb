@@ -1,7 +1,6 @@
 module FeastFast
   module DB
     def self.data(year)
-      year = year.to_i
       return @data[year] if @data && @data.has_key?( year )
 
       @data ||= {}
@@ -20,12 +19,15 @@ module FeastFast
       self.data(date.year)[:days][date]
     end
 
-    def self.feasts(year, status)
-      year = year.to_i
-      self.data(year)[:days].select do |date, hash|
-        hash[:feasts].map{|feast| feast.status == status}.any?
+    def self.feasts(year, *params)
+      days = self.data(year)[:days].select do |date, hash|
+        if params.any?
+          hash[:feasts].map{|feast| params.include? feast.status}.any?
+        else
+          hash[:feasts].any?
+        end
       end
+      Hash[days]
     end
-
   end
 end

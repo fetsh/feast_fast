@@ -38,10 +38,14 @@ if days_till_easter > 50
   if today.feasts.any?
     puts "Don't be sad, today you can celebrate #{today.feasts.first}"
   else
-    remaining_feasts = Date.with_feasts(today.year, FeastFast::Feast::STATUS::TWELVE).select{ |feast_day| feast_day > today }
+    remaining_feasts = Date.with_feasts(
+                                  today.year,
+                                  FeastFast::Feast::STATUS::TWELVE,
+                                  FeastFast::Feast::STATUS::GREAT
+                                  ).drop_while{ |feast_day| feast_day <= today }
     if remaining_feasts.size > 1
       puts "Don't be sad, there are still #{remaining_feasts.size} Great Feasts in this year:"
-      remaining_feasts.sort.each { |date| puts "At #{date.strftime('%d %b')}: #{date.feasts.first}" }
+      remaining_feasts.each { |date| puts "At #{date.strftime('%d %b')}: #{date.feasts.first}" }
     end
   end
   puts "And don't forget to fast today!" if today.fast?

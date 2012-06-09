@@ -16,8 +16,8 @@ class Date
     self.new(year, m, d) + 13
   end
 
-  def self.with_feasts(year, status)
-    FeastFast::DB.feasts(year, status).map{|a| a[0]}
+  def self.with_feasts(year, *statuses)
+    FeastFast::DB.feasts(year, *statuses).keys.sort
   end
 
   def feasts
@@ -36,6 +36,15 @@ class Date
   end
 
   def feasts?() self.feasts.any? end
+
+  def next_with_feast(*statuses)
+    self.class.with_feasts(self.year, *statuses).find{|d| d > self } || self.class.with_feasts(self.year + 1, *statuses).first
+  end
+
+  def prev_with_feast(*statuses)
+    self.class.with_feasts(self.year, *statuses).reverse.find{|d| d < self } || self.class.with_feasts(self.year - 1, *statuses).last
+  end
+
 
   def next_date(n=1) self + n end
   def prev_date(n=1) self - n end
