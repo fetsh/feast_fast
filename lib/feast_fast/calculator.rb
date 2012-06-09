@@ -5,7 +5,7 @@ module FeastFast
     def self.build_data(year)
 
       year = year.to_i
-      easter = Date.easter
+      easter = Date.easter(year)
 
       hash = Hash.new do |h, day|
         h[day] = {
