@@ -20,6 +20,10 @@ module FeastFast
       @text
     end
 
+    def == fast
+      self.status == fast.status && self.text == fast.text
+    end
+
     private
 
       def get_text(hsh_text)
