@@ -6,7 +6,7 @@ class Date
     a = (19 * (year % 19) + 15) % 30
     b = (2 * (year % 4) + 4 * (year % 7) + 6 * a + 6) % 7
     c = a + b
-    if c > 10
+    if c > 9
       d = c - 9 # day
       m = 4 # month
     else
